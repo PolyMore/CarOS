@@ -23,11 +23,6 @@ authenticate = requests.post(api_safefleet_authenticate, headers = {
     'pin': car_pin
 })
 
-print(car_license_plate, car_pin)
-
-
-print(authenticate.text)
-
 vehicle_id = json.loads(authenticate.text)['vehicle']['vehicle_id']
 vehicle_info = requests.get(api_safefleet_vehicle_info+str(vehicle_id), cookies=authenticate.cookies)
 parsed_vehicle_info = json.loads(vehicle_info.text)
