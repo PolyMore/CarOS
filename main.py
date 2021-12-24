@@ -4,6 +4,7 @@ import os
 import time
 from datetime import datetime
 
+
 api_dashboard_post = 'http://api.polymore.ro/api/log'
 api_safefleet_authenticate = 'https://delta.safefleet.eu/safefleet/api/authenticate_vehicle'
 api_safefleet_vehicle_info = 'https://delta.safefleet.eu/safefleet/api/vehicles/'
@@ -24,24 +25,27 @@ authenticate = requests.post(api_safefleet_authenticate, headers = {
 })
 
 vehicle_id = json.loads(authenticate.text)['vehicle']['vehicle_id']
-vehicle_info = requests.get(api_safefleet_vehicle_info+str(vehicle_id), cookies=authenticate.cookies)
-parsed_vehicle_info = json.loads(vehicle_info.text)
 
-lat = parsed_vehicle_info['current_info']['lat']
-lng = parsed_vehicle_info['current_info']['lng']
+while True:
+    vehicle_info = requests.get(api_safefleet_vehicle_info+str(vehicle_id), cookies=authenticate.cookies)
+    parsed_vehicle_info = json.loads(vehicle_info.text)
 
-print(lat, lng)
+    lat = parsed_vehicle_info['current_info']['lat']
+    lng = parsed_vehicle_info['current_info']['lng']
 
-image_filepath = "/home/xyn/PolyMore/"+datetime.now().strftime("%d-%m-%Y-%H-%M-%S")+".jpg"
-os.system("fswebcam -S 25 -r 1280x720 --no-banner " + image_filepath)
-time.sleep(1)
-dashboard_request = requests.post(api_dashboard_post, headers = {
-    'x-auth-token': dashboard_token,
-}, files = {
-    'photos': open(image_filepath, 'rb')
-}, data = {
-    'lat': lat,
-    'lng': lng
-})
+    print(lat, lng)
 
-print(dashboard_request.text)
+    image_filepath = "/home/xyn/PolyMore/"+datetime.now().strftime("%d-%m-%Y-%H-%M-%S")+".mp4"
+    os.system("ffmpeg -f v4l2 -framerate 40 -video_size 1280x720 -t 300 -i /dev/video0 " + image_filepath)
+    time.sleep(1)
+    dashboard_request = requests.post(api_dashboard_post, headers = {
+        'x-auth-token': dashboard_token,
+    }, files = {
+        'photos': open(image_filepath, 'rb')
+    }, data = {
+        'lat': lat,
+        'lng': lng
+    })
+
+    print(dashboard_request.text)
+    time.sleep(10)
