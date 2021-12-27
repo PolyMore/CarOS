@@ -30,10 +30,8 @@ while True:
     vehicle_info = requests.get(api_safefleet_vehicle_info+str(vehicle_id), cookies=authenticate.cookies)
     parsed_vehicle_info = json.loads(vehicle_info.text)
 
-#    lat = parsed_vehicle_info['current_info']['lat']
-#    lng = parsed_vehicle_info['current_info']['lng']
-    lat = 45.21
-    lng = 21.34
+    lat = parsed_vehicle_info['current_info']['lat']
+    lng = parsed_vehicle_info['current_info']['lng']
     print(lat, lng)
 
     image_filepath = "/home/xyn/PolyMore/"+datetime.now().strftime("%d-%m-%Y-%H-%M-%S")+".mp4"
