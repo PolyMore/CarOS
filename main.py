@@ -32,7 +32,6 @@ while True:
 
     lat = parsed_vehicle_info['current_info']['lat']
     lng = parsed_vehicle_info['current_info']['lng']
-
     print(lat, lng)
 
     image_filepath = "/home/xyn/PolyMore/"+datetime.now().strftime("%d-%m-%Y-%H-%M-%S")+".mp4"
@@ -43,7 +42,8 @@ while True:
         'photos': open(image_filepath, 'rb')
     }, data = {
         'lat': lat,
-        'lng': lng
+        'lng': lng,
+	'licensePlate': car_license_plate
     })
 
     print(dashboard_request.text)
