@@ -27,5 +27,6 @@ echo "[x] Setting up systemd"
 sudo systemctl daemon-reload
 systemctl status caros.service
 sudo systemctl enable caros.service
+sudo systemctl enable caros.timer
 
 echo "[x] Process done, please create the config.json file in /boot/ and then reboot."
