@@ -7,7 +7,7 @@ After=network-online.target
 Type=simple
 User=pi
 WorkingDirectory=/home/pi
-ExecStart=/home/pi/startup.sh
+ExecStart=/home/pi/CarOS/startup.sh
 
 [Install]
 WantedBy=multi-user.target
