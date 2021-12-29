@@ -43,7 +43,7 @@ dashboard_request = requests.post(api_dashboard_post, headers = {
 }, data = {
     'lat': lat,
     'lng': lng,
-	'licensePlate': car_license_plate
+    'licensePlate': car_license_plate
 })
 
 print(dashboard_request.text)

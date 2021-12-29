@@ -24,6 +24,7 @@ sudo cp -rv caros.service /lib/systemd/system/
 sudo cp -rv caros.timer /lib/systemd/system/
 
 echo "[x] Setting up systemd"
+sudo systemctl daemon-reload
 systemctl status caros.service
 sudo systemctl enable caros.service
 
