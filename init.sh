@@ -21,6 +21,7 @@ git clone https://github.com/polymore/CarOS
 cd CarOS
 chmod +x startup.sh
 sudo cp -rv caros.service /lib/systemd/system/
+sudo cp -rv caros.timer /lib/systemd/system/
 
 echo "[x] Setting up systemd"
 systemctl status caros.service

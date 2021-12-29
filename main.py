@@ -27,25 +27,23 @@ authenticate = requests.post(api_safefleet_authenticate, headers = {
 
 vehicle_id = json.loads(authenticate.text)['vehicle']['vehicle_id']
 
-while True:
-    vehicle_info = requests.get(api_safefleet_vehicle_info+str(vehicle_id), cookies=authenticate.cookies)
-    parsed_vehicle_info = json.loads(vehicle_info.text)
+vehicle_info = requests.get(api_safefleet_vehicle_info+str(vehicle_id), cookies=authenticate.cookies)
+parsed_vehicle_info = json.loads(vehicle_info.text)
 
-    lat = parsed_vehicle_info['current_info']['lat']
-    lng = parsed_vehicle_info['current_info']['lng']
-    print(lat, lng)
+lat = parsed_vehicle_info['current_info']['lat']
+lng = parsed_vehicle_info['current_info']['lng']
+print(lat, lng)
 
-    image_filepath = saved_video_path+datetime.now().strftime("%d-%m-%Y-%H-%M-%S")+".mp4"
-    os.system("ffmpeg -f v4l2 -framerate 40 -video_size 1280x720 -t 30 -i /dev/video0 " + image_filepath)
-    dashboard_request = requests.post(api_dashboard_post, headers = {
-        'x-auth-token': dashboard_token,
-    }, files = {
-        'photos': open(image_filepath, 'rb')
-    }, data = {
-        'lat': lat,
-        'lng': lng,
+image_filepath = saved_video_path+datetime.now().strftime("%d-%m-%Y-%H-%M-%S")+".mp4"
+os.system("ffmpeg -f v4l2 -framerate 40 -video_size 1280x720 -t 30 -i /dev/video0 " + image_filepath)
+dashboard_request = requests.post(api_dashboard_post, headers = {
+    'x-auth-token': dashboard_token,
+}, files = {
+    'photos': open(image_filepath, 'rb')
+}, data = {
+    'lat': lat,
+    'lng': lng,
 	'licensePlate': car_license_plate
-    })
+})
 
-    print(dashboard_request.text)
-    time.sleep(10)
+print(dashboard_request.text)
