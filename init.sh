@@ -12,8 +12,8 @@ sudo mkdir /mnt/usb
 sudo chown -R pi:pi /mnt/usb
 
 if ! grep -q 'init-usb' /etc/fstab ; then
-    sudo echo '# init-usb' >> /etc/fstab
-    sudo echo '/dev/sda1 /mnt/usb vfat defaults,auto,users,rw,nofail,noatime,uid=pi,gid=pi 0 0' >> /etc/fstab
+    echo '# init-usb' | sudo tee -a /etc/fstab
+    echo '/dev/sda1 /mnt/usb vfat defaults,auto,users,rw,nofail,noatime,uid=pi,gid=pi 0 0' | sudo tee -a /etc/fstab
 fi
 
 echo "[x] Setting up python"
