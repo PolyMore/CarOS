@@ -2,7 +2,7 @@
 Description=Timer for how often CarOS should run
 
 [Timer]
-OnUnitInactiveSec=10s
+OnUnitInactiveSec=5s
 OnBootSec=10s
 
 [Install]
