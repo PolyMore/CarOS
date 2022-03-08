@@ -1,9 +1,0 @@
-[Unit]
-Description=Timer for how often CarOS should run
-
-[Timer]
-OnUnitInactiveSec=5s
-OnBootSec=10s
-
-[Install]
-WantedBy=timers.target
